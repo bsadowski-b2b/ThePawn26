@@ -1,0 +1,251 @@
+{
+  "source_side1": "/Users/Laura/Downloads/the_pawn_s1/the_pawn_s1.d64",
+  "source_side2": "/Users/Laura/Downloads/the_pawn_s1/the_pawn_s2.d64",
+  "dmagnetic": "/tmp/dMagnetic_0.37/dMagnetic",
+  "mag": "/Users/Laura/Documents/ThePawn26/the_pawn_dmagnetic.mag",
+  "gfx": "/Users/Laura/Documents/ThePawn26/the_pawn_d64.gfx",
+  "contact_sheet": "/Users/Laura/Documents/ThePawn26/images/contact_sheet.png",
+  "count": 30,
+  "images": [
+    {
+      "id": "00",
+      "xpm": "/Users/Laura/Documents/ThePawn26/images/xpm/00.xpm",
+      "png": "/Users/Laura/Documents/ThePawn26/images/png/00.png",
+      "width": 320,
+      "height": 152,
+      "sha256": "5c5e62c0abfd940b19c0ff3d48ad2db8c35fb0cfe375d88303ef30580eb76710"
+    },
+    {
+      "id": "01",
+      "xpm": "/Users/Laura/Documents/ThePawn26/images/xpm/01.xpm",
+      "png": "/Users/Laura/Documents/ThePawn26/images/png/01.png",
+      "width": 320,
+      "height": 152,
+      "sha256": "ba4c6396fd0d21ef71798a05d572955c4a78b982b6453e3ccaf07d39fea4868e"
+    },
+    {
+      "id": "02",
+      "xpm": "/Users/Laura/Documents/ThePawn26/images/xpm/02.xpm",
+      "png": "/Users/Laura/Documents/ThePawn26/images/png/02.png",
+      "width": 320,
+      "height": 152,
+      "sha256": "e4337707c48efd49579de8322a7afce51002791c1534f9ccbc6881d10472a2e8"
+    },
+    {
+      "id": "03",
+      "xpm": "/Users/Laura/Documents/ThePawn26/images/xpm/03.xpm",
+      "png": "/Users/Laura/Documents/ThePawn26/images/png/03.png",
+      "width": 320,
+      "height": 152,
+      "sha256": "d7c24ae2a0ee176559ba4691648408de2685bfc0da85a938a64f5b160da0a279"
+    },
+    {
+      "id": "04",
+      "xpm": "/Users/Laura/Documents/ThePawn26/images/xpm/04.xpm",
+      "png": "/Users/Laura/Documents/ThePawn26/images/png/04.png",
+      "width": 320,
+      "height": 152,
+      "sha256": "53d554496fead17585aeaafd125c81674189482f3b3a66125f752fdc591ecd2e"
+    },
+    {
+      "id": "05",
+      "xpm": "/Users/Laura/Documents/ThePawn26/images/xpm/05.xpm",
+      "png": "/Users/Laura/Documents/ThePawn26/images/png/05.png",
+      "width": 320,
+      "height": 152,
+      "sha256": "54023c0968af269da7b2a05f3f4e6b8eb637e2f0222fdd52bafd4bc462006707"
+    },
+    {
+      "id": "06",
+      "xpm": "/Users/Laura/Documents/ThePawn26/images/xpm/06.xpm",
+      "png": "/Users/Laura/Documents/ThePawn26/images/png/06.png",
+      "width": 320,
+      "height": 152,
+      "sha256": "8ff511314012daded38c642eec7a7efae67fcbae04dd327b1322eb167179703f"
+    },
+    {
+      "id": "07",
+      "xpm": "/Users/Laura/Documents/ThePawn26/images/xpm/07.xpm",
+      "png": "/Users/Laura/Documents/ThePawn26/images/png/07.png",
+      "width": 320,
+      "height": 152,
+      "sha256": "b300b5e4fe5bf7b1bf5f9d98a9e52bf6cb2a63391b2e3d97dbcf8cabd6d6ffa5"
+    },
+    {
+      "id": "08",
+      "xpm": "/Users/Laura/Documents/ThePawn26/images/xpm/08.xpm",
+      "png": "/Users/Laura/Documents/ThePawn26/images/png/08.png",
+      "width": 320,
+      "height": 152,
+      "sha256": "fe870d833853cc82a4f4aa3433916da2f8fe4999e7e18a4a6bd6443ffc40b6f0"
+    },
+    {
+      "id": "09",
+      "xpm": "/Users/Laura/Documents/ThePawn26/images/xpm/09.xpm",
+      "png": "/Users/Laura/Documents/ThePawn26/images/png/09.png",
+      "width": 320,
+      "height": 152,
+      "sha256": "d7a7b10e996cacce778586a8d6a9edb1b4e99f1e356889771991bf36d621187e"
+    },
+    {
+      "id": "10",
+      "xpm": "/Users/Laura/Documents/ThePawn26/images/xpm/10.xpm",
+      "png": "/Users/Laura/Documents/ThePawn26/images/png/10.png",
+      "width": 320,
+      "height": 152,
+      "sha256": "1fb1e9bd941d5fecea88aac75a2507a4a4b246a9392a126e85f2b0ba10799eea"
+    },
+    {
+      "id": "11",
+      "xpm": "/Users/Laura/Documents/ThePawn26/images/xpm/11.xpm",
+      "png": "/Users/Laura/Documents/ThePawn26/images/png/11.png",
+      "width": 320,
+      "height": 152,
+      "sha256": "1238a121abe1d9de37e58c0267acbd80a8468433ae4455c12df44c282ce87bb0"
+    },
+    {
+      "id": "12",
+      "xpm": "/Users/Laura/Documents/ThePawn26/images/xpm/12.xpm",
+      "png": "/Users/Laura/Documents/ThePawn26/images/png/12.png",
+      "width": 320,
+      "height": 152,
+      "sha256": "8c49ebcfd63d01ce9197f31676b4aebf49c2abb5bb4ad5c6bf324916a9812e19"
+    },
+    {
+      "id": "13",
+      "xpm": "/Users/Laura/Documents/ThePawn26/images/xpm/13.xpm",
+      "png": "/Users/Laura/Documents/ThePawn26/images/png/13.png",
+      "width": 320,
+      "height": 152,
+      "sha256": "35c6f662a1c79b9b44fdd9b849b0674963232d7bd0118338e0ee806bf01dd934"
+    },
+    {
+      "id": "14",
+      "xpm": "/Users/Laura/Documents/ThePawn26/images/xpm/14.xpm",
+      "png": "/Users/Laura/Documents/ThePawn26/images/png/14.png",
+      "width": 320,
+      "height": 152,
+      "sha256": "1e0e052eb1dd194da986bb2215baeafc2e1c669fd68aa54d35d0f200fe9b319f"
+    },
+    {
+      "id": "15",
+      "xpm": "/Users/Laura/Documents/ThePawn26/images/xpm/15.xpm",
+      "png": "/Users/Laura/Documents/ThePawn26/images/png/15.png",
+      "width": 320,
+      "height": 152,
+      "sha256": "ede130c6d3cdfbbf1817c30bc0bc8716459a6968228da7aabbe91ce5976818db"
+    },
+    {
+      "id": "16",
+      "xpm": "/Users/Laura/Documents/ThePawn26/images/xpm/16.xpm",
+      "png": "/Users/Laura/Documents/ThePawn26/images/png/16.png",
+      "width": 320,
+      "height": 152,
+      "sha256": "5293b4816fc6cd367a29f4957918cf59ce27963e998b3d4e37d924b7c2a30655"
+    },
+    {
+      "id": "17",
+      "xpm": "/Users/Laura/Documents/ThePawn26/images/xpm/17.xpm",
+      "png": "/Users/Laura/Documents/ThePawn26/images/png/17.png",
+      "width": 320,
+      "height": 152,
+      "sha256": "6d483f8a1508b1c6a020686c8e3d89cbeac4ca435cef188fd4213b4ae2400942"
+    },
+    {
+      "id": "18",
+      "xpm": "/Users/Laura/Documents/ThePawn26/images/xpm/18.xpm",
+      "png": "/Users/Laura/Documents/ThePawn26/images/png/18.png",
+      "width": 320,
+      "height": 152,
+      "sha256": "da7332b412badc19f4afc3fe8fb37c975f8d0c9e162355afda4051458026b2dd"
+    },
+    {
+      "id": "19",
+      "xpm": "/Users/Laura/Documents/ThePawn26/images/xpm/19.xpm",
+      "png": "/Users/Laura/Documents/ThePawn26/images/png/19.png",
+      "width": 320,
+      "height": 152,
+      "sha256": "6600bf179cf627d26368a6f11f158f58a557037d1722168c6f2ba9097b507adf"
+    },
+    {
+      "id": "20",
+      "xpm": "/Users/Laura/Documents/ThePawn26/images/xpm/20.xpm",
+      "png": "/Users/Laura/Documents/ThePawn26/images/png/20.png",
+      "width": 320,
+      "height": 152,
+      "sha256": "a6e3fbc79c803e517439cc284efe3b577c35a944c4146b26daa66bb534c71156"
+    },
+    {
+      "id": "21",
+      "xpm": "/Users/Laura/Documents/ThePawn26/images/xpm/21.xpm",
+      "png": "/Users/Laura/Documents/ThePawn26/images/png/21.png",
+      "width": 320,
+      "height": 152,
+      "sha256": "bdf33fd01efbb80201747219c800e85b3dc5d85ea626dfe6ce7cb0e57581d0dc"
+    },
+    {
+      "id": "22",
+      "xpm": "/Users/Laura/Documents/ThePawn26/images/xpm/22.xpm",
+      "png": "/Users/Laura/Documents/ThePawn26/images/png/22.png",
+      "width": 320,
+      "height": 152,
+      "sha256": "47c7d4f3ca52c537d7806069e41c8652e41c0fd41673d258ce697fcca71f580c"
+    },
+    {
+      "id": "23",
+      "xpm": "/Users/Laura/Documents/ThePawn26/images/xpm/23.xpm",
+      "png": "/Users/Laura/Documents/ThePawn26/images/png/23.png",
+      "width": 320,
+      "height": 152,
+      "sha256": "c1e835eb1e75243756985cdb369524edaafe3e08f6a583b9bbe5b35470f028c1"
+    },
+    {
+      "id": "24",
+      "xpm": "/Users/Laura/Documents/ThePawn26/images/xpm/24.xpm",
+      "png": "/Users/Laura/Documents/ThePawn26/images/png/24.png",
+      "width": 320,
+      "height": 152,
+      "sha256": "0372b7adb478fac899d349ca7791e67c8f2e2066e1a0ffc51c3520bfdd735994"
+    },
+    {
+      "id": "25",
+      "xpm": "/Users/Laura/Documents/ThePawn26/images/xpm/25.xpm",
+      "png": "/Users/Laura/Documents/ThePawn26/images/png/25.png",
+      "width": 320,
+      "height": 152,
+      "sha256": "df45e4f612a74f4d5c84abc10dd7e519ca952ba1207d6da0174facf97f1779d0"
+    },
+    {
+      "id": "26",
+      "xpm": "/Users/Laura/Documents/ThePawn26/images/xpm/26.xpm",
+      "png": "/Users/Laura/Documents/ThePawn26/images/png/26.png",
+      "width": 320,
+      "height": 152,
+      "sha256": "294afe95c2ecf4e215756e8d52b17f039bc0016583daeaaa4fce9b7938b2cdbf"
+    },
+    {
+      "id": "27",
+      "xpm": "/Users/Laura/Documents/ThePawn26/images/xpm/27.xpm",
+      "png": "/Users/Laura/Documents/ThePawn26/images/png/27.png",
+      "width": 320,
+      "height": 152,
+      "sha256": "fac96658cd709d18ddcd83a1566b518ff1099aa719f46cb693f1919e4acead85"
+    },
+    {
+      "id": "28",
+      "xpm": "/Users/Laura/Documents/ThePawn26/images/xpm/28.xpm",
+      "png": "/Users/Laura/Documents/ThePawn26/images/png/28.png",
+      "width": 320,
+      "height": 152,
+      "sha256": "c15d6b48474d0b1cb8edfe21ccb5dda8648c49352de105a222bfce5a46a81966"
+    },
+    {
+      "id": "29",
+      "xpm": "/Users/Laura/Documents/ThePawn26/images/xpm/29.xpm",
+      "png": "/Users/Laura/Documents/ThePawn26/images/png/29.png",
+      "width": 320,
+      "height": 152,
+      "sha256": "9b0da9eb5077225e24ac0108a892d8bb9a8751b96d50d568f0d09747d5c8d82d"
+    }
+  ]
+}

@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Pawn - Original Asset Edition</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="app-shell">
+    <section class="game-panel" aria-label="Original asset edition">
+      <div class="screen">
+        <img id="sceneImage" alt="Original Commodore 64 illustration" width="320" height="152">
+      </div>
+
+      <div class="transcript" id="transcript" aria-live="polite" aria-label="Game transcript"></div>
+
+      <form class="command-line" id="commandForm" autocomplete="off">
+        <span>&gt;</span>
+        <input id="commandInput" name="command" type="text" spellcheck="false" autofocus>
+      </form>
+
+      <details class="tool-drawer">
+        <summary>Tools</summary>
+        <div class="tool-body">
+          <header class="titlebar">
+            <div>
+              <h1>The Pawn</h1>
+              <p>Original Asset Edition</p>
+            </div>
+            <a class="small-link" href="../remake/index.html">Remake</a>
+          </header>
+
+          <div class="asset-strip" aria-live="polite">
+            <div>
+              <span>Image</span>
+              <strong id="imageId">04</strong>
+            </div>
+            <div>
+              <span>Text</span>
+              <strong id="textId">0000</strong>
+            </div>
+            <div>
+              <span>Location</span>
+              <strong id="roomTitle">On The Path</strong>
+            </div>
+          </div>
+
+          <article class="location-card">
+            <p id="locationText"></p>
+            <div class="exit-list" id="exitList"></div>
+          </article>
+
+          <aside class="catalog-panel" aria-label="Original text table">
+            <div class="catalog-head">
+              <h2>Text Table</h2>
+              <span id="resultCount">1181</span>
+            </div>
+            <label class="search-box">
+              <span>Search</span>
+              <input id="searchInput" type="search" spellcheck="false" placeholder="fog, Kronos, palace">
+            </label>
+            <div class="result-list" id="resultList"></div>
+          </aside>
+        </div>
+      </details>
+    </section>
+  </main>
+
+  <script src="assets.js" defer></script>
+  <script src="app.js" defer></script>
+</body>
+</html>
