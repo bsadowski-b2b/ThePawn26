@@ -3,212 +3,224 @@
 
   const assets = window.PAWN_ORIGINAL_ASSETS;
   const strings = assets.strings;
-  const images = assets.images;
-  const imageById = new Map(images.map((image) => [image.id, image]));
+  const updatedImages = [
+    { id: "path", src: "../images/updated/path.jpg" },
+    { id: "forest", src: "../images/updated/forest.jpg" },
+    { id: "gardens", src: "../images/updated/gardens.jpg" },
+    { id: "gatehouse", src: "../images/updated/gatehouse.jpg" },
+    { id: "bridge", src: "../images/updated/bridge.jpg" },
+    { id: "hut", src: "../images/updated/hut.jpg" },
+    { id: "boulders", src: "../images/updated/boulders.jpg" },
+    { id: "library", src: "../images/updated/library.jpg" },
+    { id: "bedroom", src: "../images/updated/bedroom.jpg" },
+    { id: "laboratory", src: "../images/updated/laboratory.jpg" },
+    { id: "hell", src: "../images/updated/hell.jpg" }
+  ];
+  const imageById = new Map(updatedImages.map((image) => [image.id, image]));
 
   const rooms = {
     path0: {
       title: "On The Path",
       text: 0,
-      image: "04",
+      image: "path",
       exits: { north: "path11", east: "plain13", west: "forest4", south: "path1" }
     },
     path1: {
       title: "On The Path",
       text: 1,
-      image: "04",
+      image: "path",
       exits: { north: "path0", east: "plain14", west: "forest5", south: "path2" }
     },
     path2: {
       title: "On The Path",
       text: 2,
-      image: "04",
+      image: "path",
       exits: { north: "path1", east: "plain15", west: "forest5" },
       blocked: { south: "The dense, swirling fog marks the edge of this static reconstruction." }
     },
     void3: {
       title: "Void",
       text: 3,
-      image: "02",
+      image: "library",
       exits: {}
     },
     forest4: {
       title: "Forest",
       text: 4,
-      image: "05",
+      image: "forest",
       exits: { east: "path0", south: "forest5" }
     },
     forest5: {
       title: "Forest",
       text: 5,
-      image: "05",
+      image: "forest",
       exits: { east: "path2", north: "forest4", west: "forest6" },
       blocked: { south: "The dense, swirling fog marks the edge of this static reconstruction." }
     },
     forest6: {
       title: "Clearing",
       text: 6,
-      image: "05",
+      image: "forest",
       exits: { east: "forest5", north: "forest8", south: "forest7" }
     },
     forest7: {
       title: "Forest",
       text: 7,
-      image: "05",
+      image: "forest",
       exits: { north: "forest6" },
       blocked: { south: "The dense, swirling fog marks the edge of this static reconstruction." }
     },
     forest8: {
       title: "Forest",
       text: 8,
-      image: "05",
+      image: "forest",
       exits: { south: "forest6", east: "forest9" }
     },
     forest9: {
       title: "Forest",
       text: 9,
-      image: "05",
+      image: "forest",
       exits: { west: "forest8", east: "forest10" },
       blocked: { south: "The dense, swirling fog marks the edge of this static reconstruction." }
     },
     forest10: {
       title: "Forest",
       text: 10,
-      image: "05",
+      image: "forest",
       exits: { north: "moor26", east: "path11" }
     },
     path11: {
       title: "On The Path",
       text: 11,
-      image: "04",
+      image: "path",
       exits: { north: "path12", northwest: "moor26", east: "plain13", south: "path0" }
     },
     path12: {
       title: "On The Path",
       text: 12,
-      image: "04",
+      image: "path",
       exits: { north: "foothills27", west: "hills23", east: "plain13", south: "path11" }
     },
     plain13: {
       title: "Plain",
       text: 13,
-      image: "23",
+      image: "path",
       exits: { west: "path12", east: "plain14", north: "cliff18" }
     },
     plain14: {
       title: "Wilderness",
       text: 14,
-      image: "24",
+      image: "path",
       exits: { west: "plain13", south: "plain15" }
     },
     plain15: {
       title: "Plain",
       text: 15,
-      image: "23",
+      image: "path",
       exits: { west: "path2", north: "plain14" },
       blocked: { south: "The dense, swirling fog marks the edge of this static reconstruction." }
     },
     bank16: {
       title: "Bank",
       text: 16,
-      image: "23",
+      image: "bridge",
       exits: { west: "plain14", east: "bridge17", north: "cliff18" },
       blocked: { south: "The dense, swirling fog marks the edge of this static reconstruction." }
     },
     bridge17: {
       title: "Stone Bridge",
       text: 17,
-      image: "10",
+      image: "bridge",
       exits: { west: "bank16", east: "bridge19" }
     },
     cliff18: {
       title: "Cliff",
       text: 18,
-      image: "10",
+      image: "bridge",
       exits: { west: "plain13", east: "bridge17", south: "bank16" }
     },
     bridge19: {
       title: "On The Bridge",
       text: 19,
-      image: "10",
+      image: "bridge",
       exits: { west: "bridge17", east: "gardens20" }
     },
     gardens20: {
       title: "Gardens",
       text: 20,
-      image: "00",
+      image: "gardens",
       exits: { west: "bridge19", east: "gateway21", southwest: "shed29" }
     },
     gateway21: {
       title: "Gateway",
       text: 21,
-      image: "00",
+      image: "gatehouse",
       exits: { west: "gardens20", east: "maze22" }
     },
     maze22: {
       title: "Maze",
       text: 22,
-      image: "13",
+      image: "gatehouse",
       exits: { west: "gateway21" }
     },
     hills23: {
       title: "Hills",
       text: 23,
-      image: "24",
+      image: "boulders",
       exits: { north: "foothills27", west: "hills24", northwest: "hill25", east: "path12" }
     },
     hills24: {
       title: "Hills",
       text: 24,
-      image: "24",
+      image: "boulders",
       exits: { north: "hill25", east: "hills23", west: "moor26" }
     },
     hill25: {
       title: "Hill",
       text: 25,
-      image: "24",
+      image: "boulders",
       exits: { north: "foothills27", south: "hills24", in: "hut28" }
     },
     moor26: {
       title: "Hills",
       text: 26,
-      image: "24",
+      image: "boulders",
       exits: { north: "hills24", east: "hill25", south: "forest10", west: "forest10" }
     },
     foothills27: {
       title: "Foothills",
       text: 27,
-      image: "04",
+      image: "boulders",
       exits: { south: "path12", northwest: "track80" }
     },
     hut28: {
       title: "Inside The Hut",
       text: 28,
-      image: "07",
+      image: "hut",
       exits: { out: "hill25", south: "hill25" }
     },
     shed29: {
       title: "In The Shed",
       text: 29,
-      image: "28",
+      image: "gardens",
       exits: { northeast: "gardens20", out: "gardens20" }
     },
     track80: {
       title: "Track",
       text: 80,
-      image: "01",
+      image: "bridge",
       exits: { southeast: "foothills27", northwest: "track81" }
     },
     track81: {
       title: "Track",
       text: 81,
-      image: "01",
+      image: "bridge",
       exits: { southeast: "track80", north: "track82" }
     },
     track82: {
       title: "Track",
       text: 82,
-      image: "12",
+      image: "boulders",
       exits: { south: "track81" }
     }
   };
@@ -261,8 +273,9 @@
     return String(index).padStart(4, "0");
   }
 
-  function padImageId(value) {
-    return String(value).padStart(2, "0");
+  function normalizeImageId(value) {
+    const text = String(value).trim();
+    return /^\d+$/.test(text) ? text.padStart(2, "0") : text;
   }
 
   function roomText(roomId) {
@@ -270,15 +283,15 @@
   }
 
   function setImage(imageId) {
-    const normalized = padImageId(imageId);
+    const normalized = normalizeImageId(imageId);
     const image = imageById.get(normalized);
     if (!image) {
-      appendEntry("system", `Image ${normalized} is not in the extracted set.`);
+      appendEntry("system", `Image ${normalized} is not in the updated scene set.`);
       return false;
     }
     currentImageId = normalized;
     sceneImageEl.src = image.src;
-    sceneImageEl.alt = `Original Commodore 64 illustration ${normalized}`;
+    sceneImageEl.alt = `The Pawn scene artwork: ${normalized}`;
     imageIdEl.textContent = normalized;
     return true;
   }
@@ -407,7 +420,7 @@
 
     if (verb === "image" || verb === "pic" || verb === "picture") {
       if (setImage(rest)) {
-        appendEntry("system", `Showing original image ${padImageId(rest)}.`);
+        appendEntry("system", `Showing updated image ${normalizeImageId(rest)}.`);
       }
       return;
     }
@@ -428,7 +441,7 @@
     }
 
     if (verb === "help") {
-      appendEntry("system", "Commands: north, south, east, west, northeast, northwest, southwest, look, exits, rooms, image 04, text 0000, find fog, restart.");
+      appendEntry("system", "Commands: north, south, east, west, northeast, northwest, southwest, look, exits, rooms, image path, image forest, text 0000, find fog, restart.");
       return;
     }
 

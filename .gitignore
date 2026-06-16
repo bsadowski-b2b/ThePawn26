@@ -3,8 +3,10 @@
 # Raw/intermediate extraction artifacts.
 extracted/
 images/xpm/
+images/png/
 images/contact_sheet.png
 images/dMagnetic-dump.ini
+images/manifest.json
 the_pawn.mag
 the_pawn_d64.gfx
 the_pawn_dmagnetic.mag
