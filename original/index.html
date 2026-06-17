@@ -31,6 +31,27 @@
             </div>
           </header>
 
+          <section class="debug-panel" aria-label="Debug menu">
+            <div class="debug-head">
+              <h2>Debug Menu</h2>
+              <span id="sceneCount">0 scenes</span>
+            </div>
+            <label class="select-box">
+              <span>Scene</span>
+              <select id="sceneSelect"></select>
+            </label>
+            <div class="debug-columns">
+              <section>
+                <h3>Scene Messages</h3>
+                <div id="sceneMessages" class="debug-list"></div>
+              </section>
+              <section>
+                <h3>Interactions</h3>
+                <div id="sceneInteractions" class="debug-list"></div>
+              </section>
+            </div>
+          </section>
+
           <div class="asset-strip" aria-live="polite">
             <div>
               <span>Image</span>

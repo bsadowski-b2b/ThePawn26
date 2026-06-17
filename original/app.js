@@ -271,6 +271,10 @@
   const transcriptEl = document.getElementById("transcript");
   const commandFormEl = document.getElementById("commandForm");
   const commandInputEl = document.getElementById("commandInput");
+  const sceneSelectEl = document.getElementById("sceneSelect");
+  const sceneCountEl = document.getElementById("sceneCount");
+  const sceneMessagesEl = document.getElementById("sceneMessages");
+  const sceneInteractionsEl = document.getElementById("sceneInteractions");
   const searchInputEl = document.getElementById("searchInput");
   const resultListEl = document.getElementById("resultList");
   const resultCountEl = document.getElementById("resultCount");
@@ -290,6 +294,11 @@
 
   function roomText(roomId) {
     return strings[rooms[roomId].text] || "";
+  }
+
+  function roomOptionLabel(roomId) {
+    const room = rooms[roomId];
+    return `${room.title} - ${roomId} - [${padTextIndex(room.text)}]`;
   }
 
   function setImage(imageId) {
@@ -333,6 +342,7 @@
     setImage(room.image);
     setText(room.text, room.title);
     renderExits(room);
+    updateDebugMenu();
     if (options.log !== false) {
       appendEntry("original", roomText(roomId));
     }
@@ -383,6 +393,7 @@
       return;
     }
     appendEntry("system", "No mapped exit that way.");
+    updateDebugMenu();
   }
 
   function normalizeCommand(rawCommand) {
@@ -418,6 +429,7 @@
 
     if (verb === "exits") {
       appendEntry("system", Object.keys(rooms[currentRoomId].exits).join(", ") || "No mapped exits.");
+      updateDebugMenu();
       return;
     }
 
@@ -434,6 +446,7 @@
     if (verb === "image" || verb === "pic" || verb === "picture") {
       if (setImage(rest)) {
         appendEntry("system", `Showing updated image ${currentImageId}.`);
+        updateDebugMenu();
       }
       return;
     }
@@ -442,6 +455,7 @@
       const value = parseInt(rest, 10);
       if (setText(value)) {
         appendEntry("original", strings[value]);
+        updateDebugMenu();
       }
       return;
     }
@@ -450,6 +464,7 @@
       searchInputEl.value = rest;
       renderResults(rest);
       appendEntry("system", `${resultCountEl.textContent} matching strings.`);
+      updateDebugMenu();
       return;
     }
 
@@ -459,6 +474,139 @@
     }
 
     appendEntry("system", "That command is not part of this static asset edition.");
+    updateDebugMenu();
+  }
+
+  function initializeSceneSelect() {
+    const fragment = document.createDocumentFragment();
+    Object.keys(rooms).forEach((roomId) => {
+      const option = document.createElement("option");
+      option.value = roomId;
+      option.textContent = roomOptionLabel(roomId);
+      fragment.appendChild(option);
+    });
+    sceneSelectEl.replaceChildren(fragment);
+    sceneCountEl.textContent = `${Object.keys(rooms).length} scenes`;
+  }
+
+  function updateSceneSelect() {
+    if (sceneSelectEl.value !== currentRoomId) {
+      sceneSelectEl.value = currentRoomId;
+    }
+  }
+
+  function appendDebugMessage(label, text, options = {}) {
+    const item = document.createElement("article");
+    item.className = "debug-item";
+
+    const heading = document.createElement("strong");
+    heading.textContent = label;
+
+    const body = document.createElement("p");
+    body.textContent = text;
+
+    item.append(heading, body);
+    if (options.onRun) {
+      const action = document.createElement("div");
+      action.className = "debug-action";
+      const caption = document.createElement("span");
+      caption.textContent = options.caption || "";
+      const button = document.createElement("button");
+      button.type = "button";
+      button.textContent = options.buttonLabel || "Run";
+      button.addEventListener("click", options.onRun);
+      action.append(caption, button);
+      item.appendChild(action);
+    }
+    sceneMessagesEl.appendChild(item);
+  }
+
+  function appendDebugInteraction(label, detail, command) {
+    const item = document.createElement("article");
+    item.className = "debug-item debug-action";
+
+    const text = document.createElement("div");
+    const heading = document.createElement("strong");
+    heading.textContent = label;
+    const body = document.createElement("span");
+    body.textContent = detail;
+    text.append(heading, body);
+
+    const button = document.createElement("button");
+    button.type = "button";
+    button.textContent = command;
+    button.addEventListener("click", () => handleCommand(command));
+
+    item.append(text, button);
+    sceneInteractionsEl.appendChild(item);
+  }
+
+  function updateDebugMenu() {
+    const room = rooms[currentRoomId];
+    updateSceneSelect();
+    sceneMessagesEl.replaceChildren();
+    sceneInteractionsEl.replaceChildren();
+
+    appendDebugMessage(
+      `Current description [${padTextIndex(room.text)}]`,
+      strings[room.text] || ""
+    );
+
+    appendDebugMessage(
+      "Current scene image",
+      `${currentImageId} (${room.image === currentImageId ? "mapped" : `mapped: ${room.image}`})`,
+      {
+        caption: "Preview mapped image",
+        buttonLabel: "Image",
+        onRun: () => handleCommand(`image ${room.image}`)
+      }
+    );
+
+    appendDebugInteraction("Look", `Repeat [${padTextIndex(room.text)}].`, "look");
+    appendDebugInteraction("Exits", Object.keys(room.exits).join(", ") || "No mapped exits.", "exits");
+
+    Object.entries(room.exits).forEach(([direction, targetRoomId]) => {
+      const target = rooms[targetRoomId];
+      appendDebugMessage(
+        `Exit ${direction} -> ${target.title} [${padTextIndex(target.text)}]`,
+        strings[target.text] || "",
+        {
+          caption: `Command: ${direction}`,
+          buttonLabel: "Go",
+          onRun: () => handleCommand(direction)
+        }
+      );
+      appendDebugInteraction(
+        `Go ${direction}`,
+        `${target.title} (${targetRoomId}) [${padTextIndex(target.text)}].`,
+        direction
+      );
+    });
+
+    Object.entries(room.blocked || {}).forEach(([direction, message]) => {
+      appendDebugMessage(`Blocked ${direction}`, message, {
+        caption: `Command: ${direction}`,
+        buttonLabel: "Test",
+        onRun: () => handleCommand(direction)
+      });
+      appendDebugInteraction(`Blocked ${direction}`, message, direction);
+    });
+
+    appendDebugMessage("Fallback direction response", "No mapped exit that way.", {
+      caption: "Command: up",
+      buttonLabel: "Test",
+      onRun: () => handleCommand("up")
+    });
+    appendDebugMessage("Fallback parser response", "That command is not part of this static asset edition.", {
+      caption: "Command: xyzzy",
+      buttonLabel: "Test",
+      onRun: () => handleCommand("xyzzy")
+    });
+
+    appendDebugInteraction("Invalid direction", "Exercises the generic no-exit response.", "up");
+    appendDebugInteraction("Unknown command", "Exercises the generic parser response.", "xyzzy");
+    appendDebugInteraction("Image placeholder", "Exercises missing-image fallback.", "image 04");
+    appendDebugInteraction("Open text string", `Show current text [${padTextIndex(room.text)}] directly.`, `text ${padTextIndex(room.text)}`);
   }
 
   function makePreview(text) {
@@ -519,8 +667,16 @@
     handleCommand(command);
   });
 
+  sceneSelectEl.addEventListener("change", () => {
+    const roomId = sceneSelectEl.value;
+    appendEntry("system", `Debug jump to ${roomOptionLabel(roomId)}.`);
+    renderRoom(roomId);
+    commandInputEl.focus();
+  });
+
   searchInputEl.addEventListener("input", () => renderResults(searchInputEl.value));
 
+  initializeSceneSelect();
   renderResults();
   renderRoom(currentRoomId, { log: false });
   appendEntry("original", roomText(currentRoomId));

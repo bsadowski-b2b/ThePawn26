@@ -32,7 +32,8 @@ body {
 }
 
 button,
-input {
+input,
+select {
   font: inherit;
 }
 
@@ -92,7 +93,9 @@ button:active {
 .location-card,
 .catalog-panel,
 .transcript,
-.search-box {
+.search-box,
+.debug-panel,
+.select-box {
   border: 1px solid var(--line);
   background: rgba(36, 32, 25, 0.9);
 }
@@ -104,7 +107,9 @@ button:active {
 
 .asset-strip span,
 .catalog-head span,
-.search-box span {
+.search-box span,
+.select-box span,
+.debug-head span {
   display: block;
   color: var(--muted);
   font-size: 0.75rem;
@@ -160,6 +165,101 @@ button:active {
   margin: 0;
   color: var(--paper);
   line-height: 1.55;
+}
+
+.debug-panel {
+  padding: 0.85rem;
+}
+
+.debug-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.debug-head h2,
+.debug-columns h3 {
+  margin: 0;
+  letter-spacing: 0;
+}
+
+.debug-head h2 {
+  color: var(--green);
+  font-size: 1rem;
+}
+
+.debug-columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+.debug-columns h3 {
+  color: var(--amber);
+  font-size: 0.9rem;
+  margin-bottom: 0.45rem;
+}
+
+.select-box {
+  display: block;
+  padding: 0.55rem 0.65rem;
+}
+
+.select-box select {
+  width: 100%;
+  min-width: 0;
+  min-height: 2.3rem;
+  margin-top: 0.35rem;
+  border: 1px solid var(--line);
+  background: #11100d;
+  color: var(--paper);
+}
+
+.debug-list {
+  display: grid;
+  gap: 0.45rem;
+  max-height: 18rem;
+  overflow: auto;
+  padding-right: 0.25rem;
+}
+
+.debug-item {
+  border: 1px solid var(--line);
+  background: #17150f;
+  padding: 0.6rem;
+  line-height: 1.35;
+}
+
+.debug-item strong {
+  display: block;
+  color: var(--cyan);
+  font-size: 0.8rem;
+  margin-bottom: 0.25rem;
+}
+
+.debug-item span,
+.debug-item p {
+  color: var(--paper);
+}
+
+.debug-item p {
+  margin: 0;
+}
+
+.debug-action {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.55rem;
+  align-items: center;
+}
+
+.debug-action button {
+  min-height: 2rem;
+  padding: 0 0.55rem;
+  color: var(--green);
 }
 
 .exit-list {
@@ -354,6 +454,10 @@ button:active {
   }
 
   .asset-strip {
+    grid-template-columns: 1fr;
+  }
+
+  .debug-columns {
     grid-template-columns: 1fr;
   }
 
