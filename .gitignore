@@ -15,3 +15,6 @@ the_pawn_text_dump.txt
 # Local tooling; not required by the static Pages site.
 scripts/
 remake/
+
+# Large local source images; the site uses optimized named assets.
+images/updated/*.png

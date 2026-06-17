@@ -6,6 +6,8 @@
   const updatedImages = [
     { id: "path", src: "../images/updated/path.jpg" },
     { id: "forest", src: "../images/updated/forest.jpg" },
+    { id: "plain", src: "../images/updated/plain.jpg" },
+    { id: "hills", src: "../images/updated/hills.jpg" },
     { id: "gardens", src: "../images/updated/gardens.jpg" },
     { id: "gatehouse", src: "../images/updated/gatehouse.jpg" },
     { id: "bridge", src: "../images/updated/bridge.jpg" },
@@ -14,7 +16,15 @@
     { id: "library", src: "../images/updated/library.jpg" },
     { id: "bedroom", src: "../images/updated/bedroom.jpg" },
     { id: "laboratory", src: "../images/updated/laboratory.jpg" },
-    { id: "hell", src: "../images/updated/hell.jpg" }
+    { id: "hell", src: "../images/updated/hell.jpg" },
+    { id: "tower", src: "../images/updated/tower.jpg" },
+    { id: "tunnel", src: "../images/updated/tunnel.jpg" },
+    { id: "cave", src: "../images/updated/cave.jpg" },
+    { id: "ice", src: "../images/updated/ice.jpg" },
+    { id: "lava", src: "../images/updated/lava.jpg" },
+    { id: "treasure", src: "../images/updated/treasure.jpg" },
+    { id: "snowman", src: "../images/updated/snowman.jpg" },
+    { id: "placeholder", src: "../images/updated/placeholder.svg" }
   ];
   const imageById = new Map(updatedImages.map((image) => [image.id, image]));
 
@@ -41,7 +51,7 @@
     void3: {
       title: "Void",
       text: 3,
-      image: "library",
+      image: "placeholder",
       exits: {}
     },
     forest4: {
@@ -104,19 +114,19 @@
     plain13: {
       title: "Plain",
       text: 13,
-      image: "path",
+      image: "plain",
       exits: { west: "path12", east: "plain14", north: "cliff18" }
     },
     plain14: {
       title: "Wilderness",
       text: 14,
-      image: "path",
+      image: "plain",
       exits: { west: "plain13", south: "plain15" }
     },
     plain15: {
       title: "Plain",
       text: 15,
-      image: "path",
+      image: "plain",
       exits: { west: "path2", north: "plain14" },
       blocked: { south: "The dense, swirling fog marks the edge of this static reconstruction." }
     },
@@ -160,31 +170,31 @@
     maze22: {
       title: "Maze",
       text: 22,
-      image: "gatehouse",
+      image: "tunnel",
       exits: { west: "gateway21" }
     },
     hills23: {
       title: "Hills",
       text: 23,
-      image: "boulders",
+      image: "hills",
       exits: { north: "foothills27", west: "hills24", northwest: "hill25", east: "path12" }
     },
     hills24: {
       title: "Hills",
       text: 24,
-      image: "boulders",
+      image: "hills",
       exits: { north: "hill25", east: "hills23", west: "moor26" }
     },
     hill25: {
       title: "Hill",
       text: 25,
-      image: "boulders",
+      image: "hills",
       exits: { north: "foothills27", south: "hills24", in: "hut28" }
     },
     moor26: {
       title: "Hills",
       text: 26,
-      image: "boulders",
+      image: "hills",
       exits: { north: "hills24", east: "hill25", south: "forest10", west: "forest10" }
     },
     foothills27: {
@@ -202,19 +212,19 @@
     shed29: {
       title: "In The Shed",
       text: 29,
-      image: "gardens",
+      image: "placeholder",
       exits: { northeast: "gardens20", out: "gardens20" }
     },
     track80: {
       title: "Track",
       text: 80,
-      image: "bridge",
+      image: "cave",
       exits: { southeast: "foothills27", northwest: "track81" }
     },
     track81: {
       title: "Track",
       text: 81,
-      image: "bridge",
+      image: "cave",
       exits: { southeast: "track80", north: "track82" }
     },
     track82: {
@@ -284,15 +294,18 @@
 
   function setImage(imageId) {
     const normalized = normalizeImageId(imageId);
-    const image = imageById.get(normalized);
+    const image = imageById.get(normalized) || imageById.get("placeholder");
     if (!image) {
       appendEntry("system", `Image ${normalized} is not in the updated scene set.`);
       return false;
     }
-    currentImageId = normalized;
+    currentImageId = image.id;
     sceneImageEl.src = image.src;
-    sceneImageEl.alt = `The Pawn scene artwork: ${normalized}`;
-    imageIdEl.textContent = normalized;
+    sceneImageEl.alt = `The Pawn scene artwork: ${image.id}`;
+    imageIdEl.textContent = image.id;
+    if (image.id === "placeholder" && normalized !== "placeholder") {
+      appendEntry("system", `No updated image named ${normalized}; showing the placeholder.`);
+    }
     return true;
   }
 
@@ -420,7 +433,7 @@
 
     if (verb === "image" || verb === "pic" || verb === "picture") {
       if (setImage(rest)) {
-        appendEntry("system", `Showing updated image ${normalizeImageId(rest)}.`);
+        appendEntry("system", `Showing updated image ${currentImageId}.`);
       }
       return;
     }
@@ -441,7 +454,7 @@
     }
 
     if (verb === "help") {
-      appendEntry("system", "Commands: north, south, east, west, northeast, northwest, southwest, look, exits, rooms, image path, image forest, text 0000, find fog, restart.");
+      appendEntry("system", "Commands: north, south, east, west, northeast, northwest, southwest, look, exits, rooms, image path, image forest, image placeholder, text 0000, find fog, restart.");
       return;
     }
 

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1482 704" role="img" aria-label="Updated scene placeholder">
+  <rect width="1482" height="704" fill="#11110f"/>
+  <rect x="32" y="32" width="1418" height="640" fill="#1f1d17" stroke="#75683f" stroke-width="4"/>
+  <path d="M160 534 L452 228 L662 430 L842 272 L1322 534 Z" fill="#343225"/>
+  <path d="M452 228 L548 322 L514 320 Z" fill="#8d8050"/>
+  <circle cx="1148" cy="184" r="76" fill="#685f3a"/>
+  <text x="741" y="354" text-anchor="middle" font-family="Menlo, Consolas, monospace" font-size="54" fill="#d8cfaa">Updated image pending</text>
+</svg>
