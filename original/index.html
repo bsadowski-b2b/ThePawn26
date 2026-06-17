@@ -36,10 +36,13 @@
               <h2>Debug Menu</h2>
               <span id="sceneCount">0 scenes</span>
             </div>
-            <label class="select-box">
-              <span>Scene</span>
-              <select id="sceneSelect"></select>
-            </label>
+            <div class="scene-select-row">
+              <label class="select-box">
+                <span>Scene</span>
+                <select id="sceneSelect"></select>
+              </label>
+              <button id="loadSceneButton" class="scene-load-button" type="button">Load Scene</button>
+            </div>
             <div class="debug-columns">
               <section>
                 <h3>Scene Messages</h3>
@@ -72,16 +75,12 @@
             <div class="exit-list" id="exitList"></div>
           </article>
 
-          <aside class="catalog-panel" aria-label="Original text table">
+          <aside class="catalog-panel" aria-label="Scene responses">
             <div class="catalog-head">
-              <h2>Text Table</h2>
-              <span id="resultCount">1181</span>
+              <h2>Scene Responses</h2>
+              <span id="sceneResponseCount">0</span>
             </div>
-            <label class="search-box">
-              <span>Search</span>
-              <input id="searchInput" type="search" spellcheck="false" placeholder="fog, Kronos, palace">
-            </label>
-            <div class="result-list" id="resultList"></div>
+            <div class="result-list" id="sceneResponseList"></div>
           </aside>
         </div>
       </details>

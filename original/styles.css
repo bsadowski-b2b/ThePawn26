@@ -93,7 +93,6 @@ button:active {
 .location-card,
 .catalog-panel,
 .transcript,
-.search-box,
 .debug-panel,
 .select-box {
   border: 1px solid var(--line);
@@ -107,7 +106,6 @@ button:active {
 
 .asset-strip span,
 .catalog-head span,
-.search-box span,
 .select-box span,
 .debug-head span {
   display: block;
@@ -206,6 +204,19 @@ button:active {
 .select-box {
   display: block;
   padding: 0.55rem 0.65rem;
+}
+
+.scene-select-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.5rem;
+  align-items: end;
+}
+
+.scene-load-button {
+  min-height: 3.7rem;
+  padding: 0 0.85rem;
+  color: var(--green);
 }
 
 .select-box select {
@@ -321,8 +332,7 @@ button:active {
   color: var(--green);
 }
 
-.command-line input,
-.search-box input {
+.command-line input {
   width: 100%;
   min-width: 0;
   border: 1px solid transparent;
@@ -331,8 +341,7 @@ button:active {
   outline: none;
 }
 
-.command-line input:focus,
-.search-box input:focus {
+.command-line input:focus {
   border-bottom-color: var(--amber);
 }
 
@@ -367,7 +376,7 @@ button:active {
 
 .catalog-panel {
   display: grid;
-  grid-template-rows: auto auto minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, 1fr);
   gap: 0.75rem;
   padding: 0.85rem;
   min-height: 19rem;
@@ -387,16 +396,6 @@ button:active {
 
 .catalog-head span {
   color: var(--amber);
-}
-
-.search-box {
-  display: block;
-  padding: 0.55rem 0.65rem;
-}
-
-.search-box input {
-  margin-top: 0.3rem;
-  min-height: 2rem;
 }
 
 .result-list {
@@ -458,6 +457,10 @@ button:active {
   }
 
   .debug-columns {
+    grid-template-columns: 1fr;
+  }
+
+  .scene-select-row {
     grid-template-columns: 1fr;
   }
 

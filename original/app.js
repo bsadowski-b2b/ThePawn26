@@ -272,12 +272,12 @@
   const commandFormEl = document.getElementById("commandForm");
   const commandInputEl = document.getElementById("commandInput");
   const sceneSelectEl = document.getElementById("sceneSelect");
+  const loadSceneButtonEl = document.getElementById("loadSceneButton");
   const sceneCountEl = document.getElementById("sceneCount");
   const sceneMessagesEl = document.getElementById("sceneMessages");
   const sceneInteractionsEl = document.getElementById("sceneInteractions");
-  const searchInputEl = document.getElementById("searchInput");
-  const resultListEl = document.getElementById("resultList");
-  const resultCountEl = document.getElementById("resultCount");
+  const sceneResponseListEl = document.getElementById("sceneResponseList");
+  const sceneResponseCountEl = document.getElementById("sceneResponseCount");
 
   let currentRoomId = "path0";
   let currentImageId = rooms[currentRoomId].image;
@@ -328,7 +328,6 @@
     textIdEl.textContent = padTextIndex(numeric);
     roomTitleEl.textContent = title || `String ${padTextIndex(numeric)}`;
     locationTextEl.textContent = strings[numeric];
-    updateActiveResult();
     return true;
   }
 
@@ -461,15 +460,13 @@
     }
 
     if (verb === "find" || verb === "search") {
-      searchInputEl.value = rest;
-      renderResults(rest);
-      appendEntry("system", `${resultCountEl.textContent} matching strings.`);
+      appendEntry("system", "The tools panel now shows responses linked to the current scene only.");
       updateDebugMenu();
       return;
     }
 
     if (verb === "help") {
-      appendEntry("system", "Commands: north, south, east, west, northeast, northwest, southwest, look, exits, rooms, image path, image forest, image placeholder, text 0000, find fog, restart.");
+      appendEntry("system", "Commands: north, south, east, west, northeast, northwest, southwest, look, exits, rooms, image path, image forest, image placeholder, text 0000, restart.");
       return;
     }
 
@@ -541,11 +538,103 @@
     sceneInteractionsEl.appendChild(item);
   }
 
+  function sceneResponseItems(room) {
+    const exits = Object.entries(room.exits);
+    const exitText = exits.map(([direction]) => direction).join(", ") || "No mapped exits.";
+    const items = [
+      {
+        label: `Look [${padTextIndex(room.text)}]`,
+        command: "look",
+        text: strings[room.text] || "",
+        type: "original",
+        textIndex: room.text
+      },
+      {
+        label: "Exits response",
+        command: "exits",
+        text: exitText,
+        type: "system"
+      }
+    ];
+
+    exits.forEach(([direction, targetRoomId]) => {
+      const target = rooms[targetRoomId];
+      items.push({
+        label: `Go ${direction} -> ${target.title} [${padTextIndex(target.text)}]`,
+        command: direction,
+        text: strings[target.text] || "",
+        type: "original",
+        textIndex: target.text
+      });
+    });
+
+    Object.entries(room.blocked || {}).forEach(([direction, message]) => {
+      items.push({
+        label: `Blocked ${direction}`,
+        command: direction,
+        text: message,
+        type: "system"
+      });
+    });
+
+    items.push(
+      {
+        label: "Fallback direction response",
+        command: "up",
+        text: "No mapped exit that way.",
+        type: "system"
+      },
+      {
+        label: "Fallback parser response",
+        command: "xyzzy",
+        text: "That command is not part of this static asset edition.",
+        type: "system"
+      }
+    );
+
+    return items;
+  }
+
+  function renderSceneResponses(room) {
+    const items = sceneResponseItems(room);
+    sceneResponseListEl.replaceChildren();
+    sceneResponseCountEl.textContent = String(items.length);
+
+    items.forEach((item) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "result-item";
+      button.dataset.command = item.command;
+      if (Number.isInteger(item.textIndex)) {
+        button.dataset.textIndex = String(item.textIndex);
+      }
+
+      const label = document.createElement("strong");
+      label.textContent = item.label;
+
+      const preview = document.createElement("span");
+      preview.textContent = `Command: ${item.command}. ${makePreview(item.text)}`;
+
+      button.append(label, preview);
+      button.addEventListener("click", () => appendEntry(item.type, item.text));
+      sceneResponseListEl.appendChild(button);
+    });
+
+    updateActiveSceneResponse();
+  }
+
+  function updateActiveSceneResponse() {
+    for (const button of sceneResponseListEl.querySelectorAll(".result-item")) {
+      button.classList.toggle("active", Number(button.dataset.textIndex) === selectedTextIndex);
+    }
+  }
+
   function updateDebugMenu() {
     const room = rooms[currentRoomId];
     updateSceneSelect();
     sceneMessagesEl.replaceChildren();
     sceneInteractionsEl.replaceChildren();
+    renderSceneResponses(room);
 
     appendDebugMessage(
       `Current description [${padTextIndex(room.text)}]`,
@@ -614,52 +703,6 @@
     return compact.length > 210 ? `${compact.slice(0, 207)}...` : compact;
   }
 
-  function renderResults(query = "") {
-    const needle = query.trim().toLowerCase();
-    const allMatches = strings
-      .map((text, index) => ({ text, index }))
-      .filter((item) => !needle || item.text.toLowerCase().includes(needle));
-    const matches = allMatches.slice(0, 80);
-
-    resultListEl.replaceChildren();
-    resultCountEl.textContent = String(allMatches.length);
-
-    for (const item of matches) {
-      const button = document.createElement("button");
-      button.type = "button";
-      button.className = "result-item";
-      button.dataset.textIndex = String(item.index);
-
-      const id = document.createElement("strong");
-      id.textContent = `[${padTextIndex(item.index)}]`;
-
-      const preview = document.createElement("span");
-      preview.textContent = makePreview(item.text);
-
-      button.append(id, preview);
-      button.addEventListener("click", () => {
-        setText(item.index);
-        appendEntry("original", item.text);
-      });
-      resultListEl.appendChild(button);
-    }
-
-    if (allMatches.length > matches.length) {
-      const note = document.createElement("p");
-      note.className = "result-note";
-      note.textContent = `Showing first ${matches.length} matches.`;
-      resultListEl.appendChild(note);
-    }
-
-    updateActiveResult();
-  }
-
-  function updateActiveResult() {
-    for (const button of resultListEl.querySelectorAll(".result-item")) {
-      button.classList.toggle("active", Number(button.dataset.textIndex) === selectedTextIndex);
-    }
-  }
-
   commandFormEl.addEventListener("submit", (event) => {
     event.preventDefault();
     const command = commandInputEl.value;
@@ -667,17 +710,17 @@
     handleCommand(command);
   });
 
-  sceneSelectEl.addEventListener("change", () => {
+  function jumpToSelectedScene() {
     const roomId = sceneSelectEl.value;
     appendEntry("system", `Debug jump to ${roomOptionLabel(roomId)}.`);
     renderRoom(roomId);
     commandInputEl.focus();
-  });
+  }
 
-  searchInputEl.addEventListener("input", () => renderResults(searchInputEl.value));
+  sceneSelectEl.addEventListener("change", jumpToSelectedScene);
+  loadSceneButtonEl.addEventListener("click", jumpToSelectedScene);
 
   initializeSceneSelect();
-  renderResults();
   renderRoom(currentRoomId, { log: false });
   appendEntry("original", roomText(currentRoomId));
 }());
