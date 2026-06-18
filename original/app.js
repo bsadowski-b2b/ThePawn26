@@ -234,6 +234,99 @@
       exits: { south: "track81" }
     }
   };
+  const confirmedRoomCount = Object.keys(rooms).length;
+  const mappedTextIndices = new Set(Object.values(rooms).map((room) => room.text));
+  const excludedDraftTextIndices = new Set([620, 917, 942, 947, 1151]);
+  const roomCandidateStarts = [
+    "At this point",
+    "The bridge here",
+    "This a ",
+    "This cavern",
+    "This chamber",
+    "This passage leads",
+    "This seems",
+    "You are ",
+    "You are now",
+    "This is ",
+    "You find yourself",
+    "You have stumbled",
+    "You recognise",
+    "You're"
+  ];
+
+  function inferDraftTitle(text, index) {
+    const lower = text.toLowerCase();
+    if (lower.includes("forest")) return "Forest";
+    if (lower.includes("path")) return "Path";
+    if (lower.includes("plain") || lower.includes("wilderness")) return "Plain";
+    if (lower.includes("hill") || lower.includes("moor")) return "Hills";
+    if (lower.includes("track")) return "Track";
+    if (lower.includes("plateau")) return "Plateau";
+    if (lower.includes("tower")) return "Ice Tower";
+    if (lower.includes("cave") || lower.includes("cavern")) return "Cave";
+    if (lower.includes("corridor") || lower.includes("passage")) return "Passage";
+    if (lower.includes("laboratory")) return "Laboratory";
+    if (lower.includes("store room") || lower.includes("store-room")) return "Store Room";
+    if (lower.includes("workshop")) return "Workshop";
+    if (lower.includes("room")) return "Room";
+    if (lower.includes("ledge")) return "Ledge";
+    if (lower.includes("bridge")) return "Bridge";
+    if (lower.includes("lift")) return "Lift";
+    if (lower.includes("office")) return "Office";
+    return `Original Scene ${padTextIndex(index)}`;
+  }
+
+  function inferImageFromText(text, title = "") {
+    const haystack = `${title} ${text}`.toLowerCase();
+    const rules = [
+      ["forest", /forest|clearing|stump/],
+      ["bridge", /bridge|bank|cliff|ravine/],
+      ["gardens", /garden|fountain|rose/],
+      ["gatehouse", /gatehouse|gateway|palace/],
+      ["hut", /hut|shed/],
+      ["boulders", /foothill|boulder|rockface|rocky/],
+      ["hills", /hill|moor|mountain|ledge/],
+      ["plain", /plain|wilderness|grass/],
+      ["tunnel", /maze|tunnel|passage|corridor|shaft/],
+      ["cave", /cave|cavern|track/],
+      ["library", /library|bookcase|books/],
+      ["bedroom", /bedroom|princess|bed/],
+      ["laboratory", /laboratory|limbeck|flask|alchemist/],
+      ["tower", /tower|platform|kronos/],
+      ["ice", /ice|snow|plateau/],
+      ["snowman", /snowman/],
+      ["lava", /lava|fire|hell|demon/],
+      ["treasure", /treasure|gold|dragon/],
+      ["path", /path/]
+    ];
+    const match = rules.find(([, pattern]) => pattern.test(haystack));
+    return match ? match[0] : "placeholder";
+  }
+
+  function seedCandidateRooms() {
+    strings.forEach((text, index) => {
+      if (mappedTextIndices.has(index)) {
+        return;
+      }
+      if (excludedDraftTextIndices.has(index)) {
+        return;
+      }
+      if (!roomCandidateStarts.some((start) => text.startsWith(start))) {
+        return;
+      }
+      const title = inferDraftTitle(text, index);
+      rooms[`draft${padTextIndex(index)}`] = {
+        title,
+        text: index,
+        image: inferImageFromText(text, title),
+        exits: {},
+        draft: true,
+        notes: "Seeded from the decoded string table. Exits and state rules still need manual mapping."
+      };
+    });
+  }
+
+  seedCandidateRooms();
 
   const directionAliases = {
     n: "north",
@@ -298,7 +391,8 @@
 
   function roomOptionLabel(roomId) {
     const room = rooms[roomId];
-    return `${room.title} - ${roomId} - [${padTextIndex(room.text)}]`;
+    const status = room.draft ? "draft" : "mapped";
+    return `${room.title} - ${roomId} - [${padTextIndex(room.text)}] - ${status}`;
   }
 
   function setImage(imageId) {
@@ -353,7 +447,7 @@
     if (!exitNames.length) {
       const chip = document.createElement("span");
       chip.className = "exit-chip";
-      chip.textContent = "No mapped exits";
+      chip.textContent = room.draft ? "Exits not mapped yet" : "No mapped exits";
       exitListEl.appendChild(chip);
     }
     for (const direction of exitNames) {
@@ -391,7 +485,7 @@
       appendEntry("system", room.blocked[direction]);
       return;
     }
-    appendEntry("system", "No mapped exit that way.");
+    appendEntry("system", room.draft ? "That exit is not mapped yet for this seeded scene." : "No mapped exit that way.");
     updateDebugMenu();
   }
 
@@ -442,6 +536,12 @@
       return;
     }
 
+    if (verb === "coverage") {
+      const draftCount = Object.values(rooms).filter((room) => room.draft).length;
+      appendEntry("system", `${confirmedRoomCount} mapped scenes, ${draftCount} seeded scene candidates, ${strings.length} decoded text responses.`);
+      return;
+    }
+
     if (verb === "image" || verb === "pic" || verb === "picture") {
       if (setImage(rest)) {
         appendEntry("system", `Showing updated image ${currentImageId}.`);
@@ -460,13 +560,23 @@
     }
 
     if (verb === "find" || verb === "search") {
-      appendEntry("system", "The tools panel now shows responses linked to the current scene only.");
+      const needle = rest.trim().toLowerCase();
+      if (!needle) {
+        appendEntry("system", "Usage: find fog");
+        return;
+      }
+      const matches = strings
+        .map((text, index) => ({ text, index }))
+        .filter((item) => item.text.toLowerCase().includes(needle))
+        .slice(0, 12)
+        .map((item) => `[${padTextIndex(item.index)}] ${makePreview(item.text)}`);
+      appendEntry("system", matches.length ? matches.join("\n") : `No decoded text matched "${rest}".`);
       updateDebugMenu();
       return;
     }
 
     if (verb === "help") {
-      appendEntry("system", "Commands: north, south, east, west, northeast, northwest, southwest, look, exits, rooms, image path, image forest, image placeholder, text 0000, restart.");
+      appendEntry("system", "Commands: north, south, east, west, northeast, northwest, southwest, look, exits, rooms, coverage, image path, image forest, image placeholder, text 0000, find fog, restart.");
       return;
     }
 
@@ -483,7 +593,7 @@
       fragment.appendChild(option);
     });
     sceneSelectEl.replaceChildren(fragment);
-    sceneCountEl.textContent = `${Object.keys(rooms).length} scenes`;
+    sceneCountEl.textContent = `${confirmedRoomCount} mapped / ${Object.keys(rooms).length} seeded`;
   }
 
   function updateSceneSelect() {
@@ -556,6 +666,15 @@
         type: "system"
       }
     ];
+
+    if (room.draft) {
+      items.push({
+        label: "Manual mapping status",
+        command: "coverage",
+        text: room.notes,
+        type: "system"
+      });
+    }
 
     exits.forEach(([direction, targetRoomId]) => {
       const target = rooms[targetRoomId];
@@ -650,6 +769,10 @@
         onRun: () => handleCommand(`image ${room.image}`)
       }
     );
+
+    if (room.draft) {
+      appendDebugMessage("Manual mapping status", room.notes);
+    }
 
     appendDebugInteraction("Look", `Repeat [${padTextIndex(room.text)}].`, "look");
     appendDebugInteraction("Exits", Object.keys(room.exits).join(", ") || "No mapped exits.", "exits");
